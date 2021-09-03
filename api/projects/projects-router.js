@@ -57,7 +57,38 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-
+    const { name, description } = req.body
+    if (!name || !description) {
+        res.status(400).json({
+            message: 'Please provide updates to the project fields'
+        })
+    } else {
+        Project.get(req.params.id)
+            .then(project => {
+                if (!project) {
+                    res.status(404).json({
+                        message: 'The project with specified ID does not exist'
+                    })
+                } else {
+                    return Project.update(req.params.id, req.body)
+                }
+            })
+            .then(data => {
+                if (data) {
+                    return Project.get(req.params.id)
+                }
+            })
+            .then(project => {
+                if (project) {
+                    res.json(project)
+                }
+            })
+            .catch(err => {
+                res.status(500).json({
+                    message: `Error fetching the project: ${err.message}`
+                })
+            })
+    }
 });
 
 router.delete('/:id', (req, res) => {
