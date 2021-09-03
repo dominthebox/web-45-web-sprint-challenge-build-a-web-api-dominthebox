@@ -1,6 +1,9 @@
 // Write your "actions" router here!
 const express = require('express')
 const Action = require('./actions-model')
+const {
+    validateActionId
+} = require('./actions-middlware')
 
 const router = express.Router()
 
@@ -15,22 +18,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', (req, res) => {
-    Action.get(req.params.id)
-        .then(action => {
-            if (!action) {
-                res.status(404).json({
-                    message: 'No action with that ID exists'
-                })
-            } else {
-                res.status(200).json(action)
-            }
-        })
-        .catch(err => {
-            res.status(500).json({
-                message: `Error retrieving the action with that id: ${err.message}`
-            })
-        })
+router.get('/:id', validateActionId, (req, res) => {
+   res.json(req.params.id)
 });
 
 router.post('/', (req, res) => {

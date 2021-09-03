@@ -1,7 +1,9 @@
 // Write your "projects" router here!
 const express = require('express')
 const Project = require('./projects-model')
-
+const {
+    validateProjectId
+} = require('./projects-middleware')
 const router = express.Router()
 
 router.get('/', async (req, res) => {
@@ -15,22 +17,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', (req, res) => {
-    Project.get(req.params.id)
-        .then(project => {
-            if (!project) {
-                res.status(404).json({
-                    message: 'No project with that id exists'
-                })
-            } else {
-                res.status(200).json(project)
-            }
-        })
-        .catch(err => {
-            res.status(500).json({
-                message: `There was a problem retrieving the project: ${err.message}`
-            })
-        })
+router.get('/:id', validateProjectId, (req, res) => {
+    res.json(req.params.id)
 });
 
 router.post('/', (req, res) => {
@@ -57,8 +45,8 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    const { name, description } = req.body
-    if (!name || !description) {
+    const { name, description, completed } = req.body
+    if (!name || !description || completed ==null) {
         res.status(400).json({
             message: 'Please provide updates to the project fields'
         })
