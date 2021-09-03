@@ -147,7 +147,24 @@ We have provided test data for all the resources.
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
-1. Understand and explain the use of Middleware.
-1. The basic principles of the REST architectural style.
-1. Understand and explain the use of Express Routers.
-1. Describe tooling used to manually test the correctness of an API.
+
+Node.js allows developers to use JavaScript to write software that needed to be written in other programming languages before Node.js was released. This is a core feature since it allows us to write server code in the same language that will communicate with the web client via JSON, which is single threaded and asynchronous.
+
+Express is a framework that sits on top of Node.js, making it easier to write code fro web applications. Core features are that its simple, unopinionated, and lightweight when building RESTful web services that work with JSON. Also it contains Middleware
+
+2. Understand and explain the use of Middleware.
+
+Middleware is simply a set of functions that help extends software, its the biggest feature of Express. There's Built-in, Third-party, and custom Middleware. You can always create your own if you can't find a Middleware function to do what you need.
+
+3. The basic principles of the REST architectural style.
+
+Everything is a resource, each resource is accessible via a unique URL, resources can have multiple representations, communication happens over a stateless protocol (HTTP).
+resource management happens via HTTP methods (CRUD)
+
+4. Understand and explain the use of Express Routers.
+
+Routers are a key feature of Express, they help us map multiple requests that are  coming from the client in order to direct them to the correct server endpoints, based off the URL and HTTP method used.
+
+5. Describe tooling used to manually test the correctness of an API.
+
+Tools like HTTPie and Postman are programs that allow us to inspect and test URL endpoints manually to see if the client//server interactions are communicating the way we expect. 
